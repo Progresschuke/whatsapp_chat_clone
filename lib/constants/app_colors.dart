@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' show Color, Colors;
+import 'package:flutter/material.dart'
+    show BuildContext, Color, Colors, MediaQuery, Size;
 
 class AppColorsDark {
   AppColorsDark._(); //to make constructor private
@@ -34,3 +35,8 @@ class AppColorsLight {
   static const greyColor = Colors.grey;
   static const blackColor = Colors.black;
 }
+
+// double space(BuildContext context, double figure) {
+//   Size size = MediaQuery.of(context).size;
+//   return size.height * figure;
+// }

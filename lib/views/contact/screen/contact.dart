@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/contact_action.dart';
 import '../widgets/contact_list.dart';
 
-class ContactPage extends StatelessWidget {
-  const ContactPage({super.key});
+class ContactScreen extends StatelessWidget {
+  const ContactScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
