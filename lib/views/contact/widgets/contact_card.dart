@@ -78,13 +78,13 @@ class ContactCard extends StatelessWidget {
     );
   }
 
-  String getInitials(String fullName) {
-    var nameParts = fullName.split(' ');
+  // String getInitials(String fullName) {
+  //   var nameParts = fullName.split(' ');
 
-    String initials = '';
-    for (String eachName in nameParts) {
-      initials += eachName[0];
-    }
-    return initials.toUpperCase();
-  }
+  //   String initials = '';
+  //   for (String eachName in nameParts) {
+  //     initials += eachName[0];
+  //   }
+  //   return initials.toUpperCase();
+  // }
 }

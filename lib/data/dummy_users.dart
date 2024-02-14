@@ -33,6 +33,8 @@
 //   },
 // ];
 
+import 'package:whatsapp_clone/model/message.dart';
+
 import '../constants/app_images.dart';
 import '../model/user.dart';
 
@@ -65,4 +67,79 @@ List<User> dummyusers = [
       message: 'I can explain...',
       sent: '6:00 pm',
       image: AppImages.mike),
+];
+
+List<Message> chatMsgs = [
+  Message(
+    msg: 'Hello Progress',
+    sent: '12:00am',
+    read: '',
+    fromId: '2',
+    toId: '1',
+  ),
+  Message(
+    msg: 'Hi Michael',
+    sent: '12:15am',
+    read: '',
+    fromId: '1',
+    toId: '2',
+  ),
+  Message(
+    msg: 'Hello Progress',
+    sent: '12:00am',
+    read: '',
+    fromId: '2',
+    toId: '1',
+  ),
+  Message(
+    msg: 'Hi Michael',
+    sent: '12:15am',
+    read: '',
+    fromId: '1',
+    toId: '2',
+  ),
+  Message(
+    msg: 'Hello Progress',
+    sent: '12:00am',
+    read: '',
+    fromId: '2',
+    toId: '1',
+  ),
+  Message(
+    msg: 'Hi Michael',
+    sent: '12:15am',
+    read: '',
+    fromId: '1',
+    toId: '2',
+  ),
+  Message(
+    msg: 'Hello Progress',
+    sent: '12:00am',
+    read: '',
+    fromId: '2',
+    toId: '1',
+  ),
+  Message(
+    msg: 'Hi Michael',
+    sent: '12:15am',
+    read: '',
+    fromId: '1',
+    toId: '2',
+  ),
+  Message(
+    msg:
+        'I am glad to meet you today. I actually got your number from the registrar at your office',
+    sent: '12:20am',
+    read: '',
+    fromId: '2',
+    toId: '1',
+  ),
+  Message(
+    msg:
+        'I was just about to ask you that. It is all fine. How are you doing today?',
+    sent: '12:40am',
+    read: '',
+    fromId: '1',
+    toId: '2',
+  ),
 ];

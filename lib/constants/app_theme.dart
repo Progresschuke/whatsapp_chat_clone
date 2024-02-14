@@ -5,6 +5,7 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData lightTheme = ThemeData(
+    primaryColor: AppColorsLight.chatBackgroundColor,
     scaffoldBackgroundColor: AppColorsLight.backgroundColor,
     appBarTheme: const AppBarTheme(
         color: AppColorsLight.appBarColor,
@@ -33,34 +34,41 @@ class AppTheme {
       foregroundColor: AppColorsLight.backgroundColor,
       backgroundColor: AppColorsLight.appBarColor,
     ),
+    primaryColorDark: AppColorsLight.userMessageCardColor,
+    primaryColorLight: AppColorsLight.chatUserMessageCardColor,
   );
+
   static ThemeData darkTheme = ThemeData(
-      scaffoldBackgroundColor: AppColorsDark.backgroundColor,
-      appBarTheme: const AppBarTheme(
-          color: AppColorsDark.appBarColor,
-          foregroundColor: Colors.white,
-          titleTextStyle: TextStyle(color: Colors.white)),
-      tabBarTheme: const TabBarTheme(
-          indicatorColor: Color(0xFF119E7E),
-          labelColor: Color(0xFF119E7E),
-          unselectedLabelColor: Color(0xFF828F97)),
-      textTheme: const TextTheme(
-        titleLarge: TextStyle(
-          color: Color(0xFFEAF1F7),
-        ),
-        titleMedium: TextStyle(
-          color: Color(0xFF828F97),
-        ),
+    primaryColor: AppColorsDark.chatBackgroundColor,
+    scaffoldBackgroundColor: AppColorsDark.backgroundColor,
+    appBarTheme: const AppBarTheme(
+        color: AppColorsDark.appBarColor,
+        foregroundColor: Colors.white,
+        titleTextStyle: TextStyle(color: Colors.white)),
+    tabBarTheme: const TabBarTheme(
+        indicatorColor: Color(0xFF119E7E),
+        labelColor: Color(0xFF119E7E),
+        unselectedLabelColor: Color(0xFF828F97)),
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        color: Color(0xFFEAF1F7),
       ),
-      cardColor: AppColorsDark.backgroundColor,
-      listTileTheme: const ListTileThemeData(
-          tileColor: AppColorsDark.backgroundColor,
-          leadingAndTrailingTextStyle: TextStyle(color: Color(0xFF828F97)),
-          iconColor: Color(0xFF828F97),
-          titleTextStyle: TextStyle(color: Color(0xFFEAF1F7)),
-          subtitleTextStyle: TextStyle(color: Color(0xFF828F97))),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        foregroundColor: AppColorsDark.backgroundColor,
-        backgroundColor: Color(0xFF119E7E),
-      ));
+      titleMedium: TextStyle(
+        color: Color(0xFF828F97),
+      ),
+    ),
+    cardColor: AppColorsDark.backgroundColor,
+    listTileTheme: const ListTileThemeData(
+        tileColor: AppColorsDark.backgroundColor,
+        leadingAndTrailingTextStyle: TextStyle(color: Color(0xFF828F97)),
+        iconColor: Color(0xFF828F97),
+        titleTextStyle: TextStyle(color: Color(0xFFEAF1F7)),
+        subtitleTextStyle: TextStyle(color: Color(0xFF828F97))),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      foregroundColor: AppColorsDark.backgroundColor,
+      backgroundColor: Color(0xFF119E7E),
+    ),
+    primaryColorDark: AppColorsDark.userMessageCardColor,
+    primaryColorLight: AppColorsDark.chatUserMessageCardColor,
+  );
 }

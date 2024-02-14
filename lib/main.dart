@@ -3,7 +3,10 @@ import 'package:whatsapp_clone/views/contact/screen/contact.dart';
 
 import 'constants/app_theme.dart';
 
-void main() {
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
