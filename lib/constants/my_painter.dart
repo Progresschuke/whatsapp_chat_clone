@@ -43,7 +43,7 @@ class RPSCustomPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Circle
 
-    Paint paint_stroke_1 = Paint()
+    Paint paintStroke = Paint()
       ..color = const Color.fromARGB(255, 33, 150, 243)
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.00
@@ -82,7 +82,7 @@ class RPSCustomPainter extends CustomPainter {
         size.height * 0.3500000);
     path_1.close();
 
-    canvas.drawPath(path_1, paint_stroke_1);
+    canvas.drawPath(path_1, paintStroke);
   }
 
   @override

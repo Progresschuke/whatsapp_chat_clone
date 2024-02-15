@@ -1,12 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/views/contact/screen/contact.dart';
 
 import 'constants/app_theme.dart';
+import 'firebase_options.dart';
+import 'router/router.dart';
+import 'views/auth/login/screen/login.dart';
+import 'views/landing/screen/landing.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -21,7 +27,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const HomePage(),
+      onGenerateRoute: (settings) => generateRoute(settings),
+      home: const LandingScreen(),
     );
   }
 }
@@ -31,6 +38,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ContactScreen();
+    return const LoginScreen();
   }
 }
