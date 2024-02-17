@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/constants/app_colors.dart';
 import 'package:whatsapp_clone/constants/app_images.dart';
 import 'package:whatsapp_clone/utils/size/size_const.dart';
-import 'package:whatsapp_clone/views/auth/login/screen/login.dart';
+import 'package:whatsapp_clone/views/auth/screens/login.dart';
 
 class LandingScreen extends StatelessWidget {
   static const routeName = '/landing';
