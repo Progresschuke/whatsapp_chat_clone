@@ -25,8 +25,7 @@ class AuthRepository {
           await auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
-          print(e.message);
-          return;
+          throw Exception(e.message);
         },
         codeSent: (verificationId, forceResendingToken) {
           Navigator.pushNamed(context, OtpScreen.routeName);

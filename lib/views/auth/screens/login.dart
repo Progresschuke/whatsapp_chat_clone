@@ -1,5 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/utils/error_snack.dart';
+import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
 
 import '../../../utils/size/size_const.dart';
 import '../../landing/screen/landing.dart';
@@ -30,14 +33,14 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class VerifyPhoneForm extends StatefulWidget {
+class VerifyPhoneForm extends ConsumerStatefulWidget {
   const VerifyPhoneForm({super.key});
 
   @override
-  State<VerifyPhoneForm> createState() => _VerifyPhoneFormState();
+  ConsumerState<VerifyPhoneForm> createState() => _VerifyPhoneFormState();
 }
 
-class _VerifyPhoneFormState extends State<VerifyPhoneForm> {
+class _VerifyPhoneFormState extends ConsumerState<VerifyPhoneForm> {
   final phoneController = TextEditingController();
   Country? country;
   String? countryCode;
@@ -54,6 +57,20 @@ class _VerifyPhoneFormState extends State<VerifyPhoneForm> {
         countryCode = myCountry.phoneCode;
       },
     );
+  }
+
+  void signInWithPhoneNumber() {
+    final phoneNumber = phoneController.text.trim();
+    if (country == null && phoneNumber.length < 8) {
+      //show snackbar error message
+      ShowSnack.showSnackBar(context, error: 'Enter a valid phone number.');
+      return;
+    }
+    if (country != null && phoneNumber.length > 8) {
+      ref
+          .read(authControllerProvider)
+          .signInWithPhoneNumber(context, phoneNumber);
+    }
   }
 
   @override
@@ -122,7 +139,8 @@ class _VerifyPhoneFormState extends State<VerifyPhoneForm> {
             SizeConst.addVerticalSpace(context, 0.5),
             SizedBox(
               width: 90,
-              child: CustomButton(onPressed: () {}, text: 'NEXT'),
+              child:
+                  CustomButton(onPressed: signInWithPhoneNumber, text: 'NEXT'),
             )
           ],
         ),

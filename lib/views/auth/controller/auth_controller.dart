@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/views/auth/screens/otp.dart';
 
 import '../repository/auth_repo.dart';
 
@@ -12,5 +13,7 @@ class AuthController {
   AuthController({required this.authRepository});
   final AuthRepository authRepository;
 
-  signInWithPhoneNumber(BuildContext context, String phoneNumber) {}
+  signInWithPhoneNumber(BuildContext context, String phoneNumber) {
+    Navigator.pushNamed(context, OtpScreen.routeName);
+  }
 }
