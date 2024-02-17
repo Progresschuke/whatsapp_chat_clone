@@ -1,27 +1,48 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/size/size_const.dart';
 import '../../../landing/screen/landing.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final phoneController = TextEditingController();
+  Country? country;
+  String? countryCode;
+
+  void selectCountryCode() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode:
+          true, // optional. Shows phone code before the country name.
+      onSelect: (Country myCountry) {
+        print('Select country: ${myCountry.phoneCode}');
+        setState(() {
+          country = myCountry;
+        });
+
+        countryCode = myCountry.phoneCode;
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    phoneController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back_ios)),
-          title: const CustomText(
-            text: 'Enter your phone number',
-            fontSize: 22,
-            color: Colors.white,
-          ),
-          automaticallyImplyLeading: false),
+      appBar: loginAppBar(context),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -31,7 +52,7 @@ class LoginScreen extends StatelessWidget {
               Text.rich(
                   textAlign: TextAlign.center,
                   TextSpan(
-                      text: 'Whatsapp will need to verify your phone number',
+                      text: 'Whatsapp will need to verify your phone number. ',
                       style: customTextStyle(context),
                       children: [
                         TextSpan(
@@ -41,33 +62,40 @@ class LoginScreen extends StatelessWidget {
                                 .titleLarge!
                                 .copyWith(
                                   color: Colors.blue,
-                                  fontSize: 16,
+                                  fontSize: 17,
                                 )),
                       ])),
               SizeConst.addVerticalSpace(context, 0.04),
               TextButton(
-                onPressed: () {},
+                onPressed: selectCountryCode,
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.blue,
                 ),
-                child: const Text('Pick country'),
+                child: const Text(
+                  'Pick country',
+                  style: TextStyle(fontSize: 17),
+                ),
               ),
               Row(
                 children: [
-                  Text(
-                    '+234',
-                    style: customTextStyle(context),
-                  ),
+                  if (country != null)
+                    Text(
+                      '+${country!.phoneCode}',
+                      style: customTextStyle(context),
+                    ),
                   SizeConst.addHorizontalSpace(context, 0.05),
                   SizedBox(
                     width: SizeConst.customWidth(context, 0.7),
                     child: TextFormField(
+                      style: customTextStyle(context),
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           hintText: 'phone number',
                           hintStyle: Theme.of(context)
                               .textTheme
                               .titleLarge!
-                              .copyWith(color: Colors.grey)),
+                              .copyWith(color: Colors.grey, fontSize: 18)),
                     ),
                   ),
                 ],
@@ -84,9 +112,24 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  PreferredSizeWidget loginAppBar(BuildContext context) {
+    return AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+        title: const CustomText(
+          text: 'Enter your phone number',
+          fontSize: 22,
+          color: Colors.white,
+        ),
+        automaticallyImplyLeading: false);
+  }
+
   customTextStyle(BuildContext _) {
     return Theme.of(_).textTheme.titleLarge!.copyWith(
-          fontSize: 16,
+          fontSize: 17,
         );
   }
 }
