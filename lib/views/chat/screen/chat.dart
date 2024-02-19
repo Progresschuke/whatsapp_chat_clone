@@ -7,6 +7,7 @@ import '../../contact/widgets/user_profile.dart';
 import '../widgets/user_chat.dart';
 
 class ChatScreen extends StatelessWidget {
+  static const routeName = '/chat';
   const ChatScreen({
     super.key,
     required this.user,
