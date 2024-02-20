@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
 import 'package:whatsapp_clone/views/error/error.dart';
 
+import 'common/widgets/loader.dart';
 import 'constants/app_theme.dart';
 import 'firebase_options.dart';
 import 'router/router.dart';
-import 'views/auth/screens/user_info.dart';
 import 'views/contact/screen/contact.dart';
 import 'views/landing/screen/landing.dart';
 
@@ -48,25 +48,5 @@ class MyApp extends ConsumerWidget {
         },
       ),
     );
-  }
-}
-
-class Loader extends StatelessWidget {
-  const Loader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const UserInfoScreen();
   }
 }
