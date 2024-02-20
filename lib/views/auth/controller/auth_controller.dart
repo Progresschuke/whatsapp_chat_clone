@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,19 +11,23 @@ import '../screens/user_info.dart';
 
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepoProvider);
-  return AuthController(authRepository: authRepository);
+  return AuthController(authRepository: authRepository, ref: ref);
 });
 
 class AuthController {
-  AuthController({required this.authRepository});
+  AuthController({
+    required this.authRepository,
+    required this.ref,
+  });
   final AuthRepository authRepository;
+  final ProviderRef ref;
 
   void signInWithPhoneNumber(BuildContext context, String phoneNumber) {
     authRepository.signInWithPhoneNumber(context, phoneNumber);
     Navigator.pushNamed(context, OtpScreen.routeName);
   }
 
-  verifyOtp(
+  void verifyOtp(
       {required BuildContext context,
       required String? verificationId,
       required String? userOtp}) {
@@ -37,7 +43,21 @@ class AuthController {
       Navigator.pushNamedAndRemoveUntil(
           context, UserInfoScreen.routeName, (route) => false);
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      showSnackBar(context: context, error: e.message.toString());
+      return;
     }
+  }
+
+  void saveUserDataToFirebase({
+    required BuildContext context,
+    required String name,
+    required File? profileImage,
+  }) {
+    authRepository.saveUserDataToFirebase(
+      context: context,
+      name: name,
+      profileImage: profileImage,
+      ref: ref,
+    );
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/utils/utils.dart';
+import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
 
 import '../../../constants/app_images.dart';
 import '../../../utils/size/size_const.dart';
@@ -18,22 +20,33 @@ class UserInfoScreen extends StatelessWidget {
   }
 }
 
-class UserInfoDetails extends StatefulWidget {
+class UserInfoDetails extends ConsumerStatefulWidget {
   const UserInfoDetails({
     super.key,
   });
 
   @override
-  State<UserInfoDetails> createState() => _UserInfoDetailsState();
+  ConsumerState<UserInfoDetails> createState() => _UserInfoDetailsState();
 }
 
-class _UserInfoDetailsState extends State<UserInfoDetails> {
+class _UserInfoDetailsState extends ConsumerState<UserInfoDetails> {
   TextEditingController nameController = TextEditingController();
   File? image;
 
   void selectUserProfile() async {
     image = await pickImageFromGallery(context);
     setState(() {});
+  }
+
+  void saveUserData() {
+    final name = nameController.text.trim();
+
+    if (name.isNotEmpty) {
+      ref.read(authControllerProvider).saveUserDataToFirebase(
+          context: context, name: name, profileImage: image);
+    }
+
+    showSnackBar(context: context, error: 'Fill in your details correctly');
   }
 
   @override
@@ -85,7 +98,7 @@ class _UserInfoDetailsState extends State<UserInfoDetails> {
                 ),
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: saveUserData,
                   icon: const Icon(
                     Icons.done,
                     color: Colors.white,

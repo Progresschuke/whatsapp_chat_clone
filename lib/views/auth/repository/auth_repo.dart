@@ -1,8 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/common/repositories/firebase_storage_repo.dart';
+import 'package:whatsapp_clone/constants/app_images.dart';
+import 'package:whatsapp_clone/model/user.dart';
+import 'package:whatsapp_clone/utils/utils.dart';
+import 'package:whatsapp_clone/views/chat/screen/chat.dart';
 
+import '../../contact/screen/contact.dart';
 import '../screens/otp.dart';
 
 final authRepoProvider = Provider((ref) {
@@ -62,6 +70,43 @@ class AuthRepository {
       // }
     } on FirebaseAuthException catch (e) {
       return e.message;
+    }
+  }
+
+  saveUserDataToFirebase({
+    required BuildContext context,
+    required String name,
+    required File? profileImage,
+    required ProviderRef ref,
+  }) async {
+    String profileUrl = AppImages.defaultProfile;
+    final userUid = auth.currentUser!.uid;
+
+    try {
+      if (profileImage != null) {
+        profileUrl = await ref
+            .read(commonFirebaseStorageRepository)
+            .storeFileToFirebase('profile/$userUid', profileImage);
+      }
+
+      var user = UserModel(
+          uid: userUid,
+          name: name,
+          profile: profileUrl,
+          isOnline: true,
+          phoneNumber: auth.currentUser!.uid,
+          groupId: []);
+
+      //save userdata to firestore
+      await firestore.collection('user').doc(userUid).set(user.toMap());
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, ContactScreen.routeName, (route) => false);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        showSnackBar(context: context, error: e.toString());
+      }
     }
   }
 }

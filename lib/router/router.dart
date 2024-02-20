@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../views/auth/screens/login.dart';
 import '../views/auth/screens/otp.dart';
 import '../views/auth/screens/user_info.dart';
+import '../views/contact/screen/contact.dart';
 import '../views/error/error.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -27,6 +28,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case UserInfoScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const UserInfoScreen(),
+      );
+
+    case ContactScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const ContactScreen(),
       );
 
     default:

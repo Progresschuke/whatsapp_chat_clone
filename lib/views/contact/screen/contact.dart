@@ -4,6 +4,7 @@ import '../widgets/contact_action.dart';
 import '../widgets/contact_list.dart';
 
 class ContactScreen extends StatelessWidget {
+  static const routeName = '/contact';
   const ContactScreen({super.key});
 
   @override
