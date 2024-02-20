@@ -4,12 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/common/repositories/firebase_storage_repo.dart';
-import 'package:whatsapp_clone/constants/app_images.dart';
-import 'package:whatsapp_clone/model/user.dart';
-import 'package:whatsapp_clone/utils/utils.dart';
-import 'package:whatsapp_clone/views/chat/screen/chat.dart';
 
+import '../../../common/repositories/firebase_storage_repo.dart';
+import '../../../constants/app_images.dart';
+import '../../../model/user.dart';
+import '../../../utils/utils.dart';
 import '../../contact/screen/contact.dart';
 import '../screens/otp.dart';
 
@@ -108,5 +107,16 @@ class AuthRepository {
         showSnackBar(context: context, error: e.toString());
       }
     }
+  }
+
+  Future<UserModel?> getCurrentUserData() async {
+    var userData =
+        await firestore.collection('user').doc(auth.currentUser?.uid).get();
+    UserModel? user;
+
+    if (userData.data() != null) {
+      user = UserModel.fromMap(userData.data()!);
+    }
+    return user;
   }
 }

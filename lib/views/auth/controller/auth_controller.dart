@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/model/user.dart';
 import 'package:whatsapp_clone/views/auth/screens/otp.dart';
 
 import '../../../utils/utils.dart';
@@ -12,6 +13,12 @@ import '../screens/user_info.dart';
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepoProvider);
   return AuthController(authRepository: authRepository, ref: ref);
+});
+
+final userDataProvider = FutureProvider((ref) {
+  final authController = ref.watch(authControllerProvider);
+
+  return authController.getUserData();
 });
 
 class AuthController {
@@ -59,5 +66,11 @@ class AuthController {
       profileImage: profileImage,
       ref: ref,
     );
+  }
+
+  Future<UserModel?> getUserData() async {
+    UserModel? user = await authRepository.getCurrentUserData();
+
+    return user;
   }
 }
