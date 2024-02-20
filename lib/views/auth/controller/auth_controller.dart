@@ -5,7 +5,7 @@ import 'package:whatsapp_clone/views/auth/screens/otp.dart';
 
 import '../../../utils/utils.dart';
 import '../repository/auth_repo.dart';
-import '../screens/success.dart';
+import '../screens/user_info.dart';
 
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepoProvider);
@@ -35,7 +35,7 @@ class AuthController {
       authRepository.verifyOtp(
           context: context, verificationId: verificationId, userOtp: userOtp);
       Navigator.pushNamedAndRemoveUntil(
-          context, SuccessScreen.routeName, (route) => false);
+          context, UserInfoScreen.routeName, (route) => false);
     } on FirebaseAuthException catch (e) {
       return e.message;
     }

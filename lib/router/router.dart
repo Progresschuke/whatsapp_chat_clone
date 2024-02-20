@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../views/auth/screens/login.dart';
 import '../views/auth/screens/otp.dart';
-import '../views/auth/screens/success.dart';
+import '../views/auth/screens/user_info.dart';
 import '../views/error/error.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -24,9 +24,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   builder: (context) => ChatScreen(user: user),
     // );
 
-    case SuccessScreen.routeName:
+    case UserInfoScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const SuccessScreen(),
+        builder: (context) => const UserInfoScreen(),
       );
 
     default:

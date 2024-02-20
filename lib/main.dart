@@ -6,6 +6,7 @@ import 'constants/app_theme.dart';
 import 'firebase_options.dart';
 import 'router/router.dart';
 import 'views/auth/screens/login.dart';
+import 'views/auth/screens/user_info.dart';
 import 'views/landing/screen/landing.dart';
 
 void main() async {
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const LandingScreen(),
+      // home: const LandingScreen(),
+      home: const HomePage(),
     );
   }
 }
@@ -39,6 +41,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoginScreen();
+    return const UserInfoScreen();
   }
 }
