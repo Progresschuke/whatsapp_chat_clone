@@ -5,6 +5,7 @@ import '../views/auth/screens/otp.dart';
 import '../views/auth/screens/user_info.dart';
 import '../views/contact/screen/contact.dart';
 import '../views/error/error.dart';
+import '../views/select_contact/screen/select_contact.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -33,6 +34,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ContactScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const ContactScreen(),
+      );
+
+    case SelectContactScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const SelectContactScreen(),
       );
 
     default:

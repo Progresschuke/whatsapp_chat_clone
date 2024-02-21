@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../select_contact/screen/select_contact.dart';
 import '../widgets/contact_action.dart';
 import '../widgets/contact_list.dart';
 
@@ -48,7 +49,9 @@ class ContactScreen extends StatelessWidget {
           ),
         ]),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, SelectContactScreen.routeName);
+          },
           child: const Icon(Icons.message_rounded),
         ),
       ),

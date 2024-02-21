@@ -16,7 +16,7 @@ Future<File?> pickImageFromGallery(BuildContext context) async {
 
     if (pickedImage != null) {
       image = File(pickedImage.path);
-      print('============================================');
+      debugPrint('============================================');
       print(image.path);
     }
   } catch (e) {

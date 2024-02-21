@@ -41,7 +41,7 @@ class MyApp extends ConsumerWidget {
           return const ContactScreen();
         },
         error: (error, stackTrace) {
-          return const ErrorScreen(error: 'An error occured');
+          return ErrorScreen(error: error.toString());
         },
         loading: () {
           return const Loader();
