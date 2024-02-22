@@ -7,6 +7,20 @@ void showSnackBar({required BuildContext context, required String error}) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
 }
 
+String getContactInitials(String displayName) {
+  List<String> names = displayName.split(" ");
+  String initials = "";
+
+  // Iterate through the first 2 names or until the end of the list
+  for (int i = 0; i < names.length && i < 2; i++) {
+    if (names[i].isNotEmpty) {
+      initials += names[i][0].toUpperCase();
+    }
+  }
+
+  return initials;
+}
+
 Future<File?> pickImageFromGallery(BuildContext context) async {
   File? image;
   try {

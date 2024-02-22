@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../select_contact/screen/select_contact.dart';
 import '../widgets/contact_action.dart';
-import '../widgets/contact_list.dart';
+import '../widgets/contact_chat_list.dart';
 
 class ContactScreen extends StatelessWidget {
   static const routeName = '/contact';
@@ -34,7 +34,7 @@ class ContactScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const ContactList(),
+          const ContactChatList(),
           Center(
             child: Text(
               'My Updates',

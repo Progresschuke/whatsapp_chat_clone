@@ -28,8 +28,8 @@ import 'package:whatsapp_clone/model/user.dart';
 
 import 'contact_card.dart';
 
-class ContactList extends StatelessWidget {
-  const ContactList({super.key});
+class ContactChatList extends StatelessWidget {
+  const ContactChatList({super.key});
 
   @override
   Widget build(BuildContext context) {
