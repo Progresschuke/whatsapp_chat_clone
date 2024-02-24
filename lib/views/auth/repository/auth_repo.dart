@@ -89,15 +89,16 @@ class AuthRepository {
       }
 
       var user = UserModel(
-          uid: userUid,
-          name: name,
-          profile: profileUrl,
-          isOnline: true,
-          phoneNumber: auth.currentUser!.uid,
-          groupId: []);
+        uid: userUid,
+        name: name,
+        profile: profileUrl,
+        isOnline: true,
+        phoneNumber: auth.currentUser!.phoneNumber!,
+        // groupId: [],
+      );
 
       //save userdata to firestore
-      await firestore.collection('user').doc(userUid).set(user.toMap());
+      await firestore.collection('users').doc(userUid).set(user.toMap());
       if (context.mounted) {
         Navigator.pushNamedAndRemoveUntil(
             context, ContactScreen.routeName, (route) => false);

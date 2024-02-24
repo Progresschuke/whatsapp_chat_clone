@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/data/dummy_users.dart';
 import 'package:whatsapp_clone/model/user.dart';
 import 'package:whatsapp_clone/utils/utils.dart';
+import 'package:whatsapp_clone/views/chat/screen/chat.dart';
 
 final selectContactRepoProvider = Provider(
     (ref) => SelectContactRepository(firestore: FirebaseFirestore.instance));
@@ -38,12 +40,35 @@ class SelectContactRepository {
 
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
-        print(selectedContact.phones);
+        String selectedPhoneNumber =
+            selectedContact.phones[0].number.replaceAll(' ', '');
+        print(selectedPhoneNumber);
+        // print(userData.phoneNumber);
+
+        if (selectedPhoneNumber == userData.phoneNumber) {
+          print('===================');
+
+          isFound = true;
+          if (context.mounted) {
+           
+            Navigator.pushNamed(context, ChatScreen.routeName,
+                arguments: dummyusers[0]);
+          }
+        }
+        // List<String> groupId = document.data()['groupId'];
+      }
+
+      if (!isFound) {
+        isFound = false;
+        if (context.mounted) {
+          showSnackBar(context: context, error: 'User not found on this app');
+        }
       }
     } catch (e) {
-      if (context.mounted) {
-        showSnackBar(context: context, error: e.toString());
-      }
+      // if (context.mounted) {
+      debugPrint(e.toString());
+      showSnackBar(context: context, error: 'error occured');
+      // }
     }
   }
 }

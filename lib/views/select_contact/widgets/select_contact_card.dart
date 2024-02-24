@@ -3,8 +3,8 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 
 import '../../../utils/utils.dart';
 
-class SelectContactList extends StatelessWidget {
-  const SelectContactList({
+class SelectContactCard extends StatelessWidget {
+  const SelectContactCard({
     super.key,
     required this.contact,
   });

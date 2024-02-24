@@ -36,11 +36,11 @@ class MyApp extends ConsumerWidget {
       home: ref.watch(userDataProvider).when(
         data: (user) {
           if (user == null) {
-            return const ContactScreen();
-            // return const LandingScreen();
+            // return const ContactScreen();
+            return const LandingScreen();
           }
-          return const LandingScreen();
-          // return const ContactScreen();
+          // return const LandingScreen();
+          return const ContactScreen();
         },
         error: (error, stackTrace) {
           return ErrorScreen(error: error.toString());

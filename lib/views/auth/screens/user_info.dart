@@ -44,9 +44,9 @@ class _UserInfoDetailsState extends ConsumerState<UserInfoDetails> {
     if (name.isNotEmpty) {
       ref.read(authControllerProvider).saveUserDataToFirebase(
           context: context, name: name, profileImage: image);
+    } else {
+      showSnackBar(context: context, error: 'Fill in your details correctly');
     }
-
-    showSnackBar(context: context, error: 'Fill in your details correctly');
   }
 
   @override
@@ -88,6 +88,10 @@ class _UserInfoDetailsState extends ConsumerState<UserInfoDetails> {
             children: [
               Expanded(
                 child: TextFormField(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                      ),
                   controller: nameController,
                   decoration: InputDecoration(
                       hintText: 'Enter your name',

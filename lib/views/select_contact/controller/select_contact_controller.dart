@@ -14,7 +14,7 @@ final getContactsProvider = FutureProvider((ref) {
 //to get details of contact when a user selects a particular contact
 final selectContactControllerProvider = Provider((ref) {
   final selectContactRepository = ref.watch(selectContactRepoProvider);
-  SelectContactController(
+  return SelectContactController(
       ref: ref, selectContactRepository: selectContactRepository);
 });
 

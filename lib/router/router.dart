@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../model/user.dart';
 import '../views/auth/screens/login.dart';
 import '../views/auth/screens/otp.dart';
 import '../views/auth/screens/user_info.dart';
+import '../views/chat/screen/chat.dart';
 import '../views/contact/screen/contact.dart';
 import '../views/error/error.dart';
 import '../views/select_contact/screen/select_contact.dart';
@@ -20,11 +22,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => OtpScreen(verificationId: verificationId),
       );
 
-    // case ChatScreen.routeName:
-    // final user = settings.arguments as User;
-    // return MaterialPageRoute(
-    //   builder: (context) => ChatScreen(user: user),
-    // );
+    case ChatScreen.routeName:
+      final user = settings.arguments as User;
+      return MaterialPageRoute(
+        builder: (context) => ChatScreen(user: user),
+      );
 
     case UserInfoScreen.routeName:
       return MaterialPageRoute(

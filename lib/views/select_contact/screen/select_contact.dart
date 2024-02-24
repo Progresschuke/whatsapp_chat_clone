@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../common/widgets/loader.dart';
 import '../../error/error.dart';
 import '../controller/select_contact_controller.dart';
-import '../widgets/select_contact_list.dart';
+import '../widgets/select_contact_card.dart';
 
 class SelectContactScreen extends ConsumerWidget {
   static const routeName = '/select_contact';
@@ -20,7 +20,14 @@ class SelectContactScreen extends ConsumerWidget {
                   itemCount: contacts.length,
                   itemBuilder: (context, index) {
                     final contact = contacts[index];
-                    return SelectContactList(contact: contact);
+                    return InkWell(
+                        onTap: () {
+                          ref
+                              .read(selectContactControllerProvider)
+                              .selectContact(
+                                  selectedContact: contact, context: context);
+                        },
+                        child: SelectContactCard(contact: contact));
                   },
                 );
               },

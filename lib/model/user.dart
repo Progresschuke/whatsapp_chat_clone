@@ -23,7 +23,7 @@ class UserModel {
   final String profile;
   final bool isOnline;
   final String phoneNumber;
-  final List<String> groupId;
+  // final List<String> groupId;
 
   UserModel({
     required this.uid,
@@ -31,7 +31,7 @@ class UserModel {
     required this.profile,
     required this.isOnline,
     required this.phoneNumber,
-    required this.groupId,
+    // required this.groupId,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,20 +41,21 @@ class UserModel {
       'profile': profile,
       'isOnline': isOnline,
       'phoneNumber': phoneNumber,
-      'groupId': groupId,
+      // 'groupId': groupId,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-        uid: map['uid'] as String,
-        name: map['name'] as String,
-        profile: map['profile'] as String,
-        isOnline: map['isOnline'] as bool,
-        phoneNumber: map['phoneNumber'] as String,
-        groupId: List<String>.from(
-          (map['groupId'] as List<String>),
-        ));
+      uid: map['uid'] as String,
+      name: map['name'] as String,
+      profile: map['profile'] as String,
+      isOnline: map['isOnline'] as bool,
+      phoneNumber: map['phoneNumber'] as String,
+      // groupId: List<String>.from(
+      //   (map['groupId'] as List<String>),
+      // ),
+    );
   }
 
   String toJson() => json.encode(toMap());
