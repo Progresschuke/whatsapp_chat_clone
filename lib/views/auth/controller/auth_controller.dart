@@ -73,4 +73,8 @@ class AuthController {
 
     return user;
   }
+
+  Stream<UserModel> getUserSnapshot(String uid) {
+    return authRepository.userSnapshot(uid);
+  }
 }

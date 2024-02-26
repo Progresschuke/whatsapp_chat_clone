@@ -25,7 +25,7 @@ class AuthRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
-  signInWithPhoneNumber(BuildContext context, String phoneNumber) async {
+  void signInWithPhoneNumber(BuildContext context, String phoneNumber) async {
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
@@ -49,11 +49,13 @@ class AuthRepository {
       );
     } on FirebaseAuthException catch (e) {
       print('FirebaseAuthException: $e');
-      return e.message;
+      if (context.mounted) {
+        showSnackBar(context: context, error: e.message!);
+      }
     }
   }
 
-  verifyOtp({
+  void verifyOtp({
     required BuildContext context,
     required String verificationId,
     required String userOtp,
@@ -68,11 +70,13 @@ class AuthRepository {
       //   Navigator.pushNamed(context, SuccessScreen.routeName);
       // }
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      if (context.mounted) {
+        showSnackBar(context: context, error: e.message!);
+      }
     }
   }
 
-  saveUserDataToFirebase({
+  void saveUserDataToFirebase({
     required BuildContext context,
     required String name,
     required File? profileImage,
@@ -119,5 +123,13 @@ class AuthRepository {
       user = UserModel.fromMap(userData.data()!);
     }
     return user;
+  }
+
+  Stream<UserModel> userSnapshot(String uid) {
+    return firestore
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .map((event) => UserModel.fromMap(event.data()!));
   }
 }

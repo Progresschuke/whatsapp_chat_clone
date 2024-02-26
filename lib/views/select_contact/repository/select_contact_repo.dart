@@ -50,9 +50,10 @@ class SelectContactRepository {
 
           isFound = true;
           if (context.mounted) {
-           
-            Navigator.pushNamed(context, ChatScreen.routeName,
-                arguments: dummyusers[0]);
+            Navigator.pushNamed(context, ChatScreen.routeName, arguments: {
+              'name': userData.name,
+              'uid': userData.uid,
+            });
           }
         }
         // List<String> groupId = document.data()['groupId'];
