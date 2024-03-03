@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/data/dummy_users.dart';
-import 'package:whatsapp_clone/model/user.dart';
-import 'package:whatsapp_clone/utils/utils.dart';
-import 'package:whatsapp_clone/views/chat/screen/chat.dart';
+
+import '../../../model/user.dart';
+import '../../../utils/utils.dart';
+import '../../chat/screen/chat.dart';
 
 final selectContactRepoProvider = Provider(
     (ref) => SelectContactRepository(firestore: FirebaseFirestore.instance));

@@ -114,6 +114,7 @@ class AuthRepository {
     }
   }
 
+//determines if a user has been signed in or not to display either the chatscreen or landing page
   Future<UserModel?> getCurrentUserData() async {
     var userData =
         await firestore.collection('user').doc(auth.currentUser?.uid).get();
@@ -125,7 +126,8 @@ class AuthRepository {
     return user;
   }
 
-  Stream<UserModel> userSnapshot(String uid) {
+//to get snapshot of chatusers which determines if a user is online or offline
+  Stream<UserModel> userSnapshotById(String uid) {
     return firestore
         .collection('users')
         .doc(uid)

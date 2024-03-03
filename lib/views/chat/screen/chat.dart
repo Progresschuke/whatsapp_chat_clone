@@ -136,6 +136,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/widgets/loader.dart';
 
 import 'package:whatsapp_clone/constants/app_colors.dart';
+import 'package:whatsapp_clone/providers/chat/chat_provider.dart';
 import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
 
 import '../../../utils/size/size_const.dart';
@@ -161,7 +162,7 @@ class ChatScreen extends ConsumerWidget {
         body: Column(
           children: [
             const Expanded(child: UserChat()),
-            userInputForm(context),
+            userInputForm(context, ref),
           ],
         ));
   }
@@ -191,17 +192,27 @@ class ChatScreen extends ConsumerWidget {
             return const Loader();
           }
 
-          return Column(children: [
-            // UserProfilePics(user: user),
-            // SizeConst.addHorizontalSpace(context, 0.02),
-            Text(
-              name,
-            ),
-            Text(
-              snapshot.data!.isOnline ? 'Online' : 'Offline',
-              style: const TextStyle(color: Colors.white),
-            ),
-          ]);
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // UserProfilePics(user: user),
+                // SizeConst.addHorizontalSpace(context, 0.02),
+                Text(
+                  name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.white),
+                ),
+
+                Text(
+                  snapshot.data!.isOnline ? 'Online' : 'Offline',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16, color: Colors.white),
+                ),
+              ]);
         },
       ),
       actions: [
@@ -212,7 +223,8 @@ class ChatScreen extends ConsumerWidget {
     );
   }
 
-  Widget userInputForm(BuildContext context) {
+  Widget userInputForm(BuildContext context, WidgetRef ref) {
+    final showSendButton = ref.watch(sendTextProvider);
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 12,
@@ -230,13 +242,13 @@ class ChatScreen extends ConsumerWidget {
             ),
             child: Row(
               children: [
-                ChatIconButton(
-                  onPressed: () {},
-                  icon: Icons.emoji_emotions_outlined,
-                ),
                 Expanded(
                     child: TextFormField(
                   decoration: InputDecoration(
+                    prefixIcon: ChatIconButton(
+                      onPressed: () {},
+                      icon: Icons.emoji_emotions_outlined,
+                    ),
                     hintText: 'Message',
                     hintStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
                           fontSize: 18,
@@ -244,6 +256,13 @@ class ChatScreen extends ConsumerWidget {
                         ),
                     border: InputBorder.none,
                   ),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      ref.read(sendTextProvider.notifier).sendTextTrue();
+                    } else {
+                      ref.read(sendTextProvider.notifier).sendTextFalse();
+                    }
+                  },
                 )),
                 ChatIconButton(
                   onPressed: () {},
@@ -252,7 +271,7 @@ class ChatScreen extends ConsumerWidget {
                 SizeConst.addHorizontalSpace(context, .001),
                 ChatIconButton(
                   onPressed: () {},
-                  icon: Icons.camera_alt_outlined,
+                  icon: Icons.camera_alt_rounded,
                 ),
               ],
             ),
@@ -266,8 +285,8 @@ class ChatScreen extends ConsumerWidget {
             ),
             child: IconButton(
                 onPressed: () {},
-                icon: const Icon(
-                  Icons.mic,
+                icon: Icon(
+                  showSendButton ? Icons.send : Icons.mic,
                   color: Colors.white,
                 )),
           )

@@ -15,6 +15,7 @@ final authControllerProvider = Provider((ref) {
   return AuthController(authRepository: authRepository, ref: ref);
 });
 
+//determines if a user has been signed in or not to display either the chatscreen or landing page
 final userDataProvider = FutureProvider((ref) {
   final authController = ref.watch(authControllerProvider);
 
@@ -75,6 +76,6 @@ class AuthController {
   }
 
   Stream<UserModel> getUserSnapshot(String uid) {
-    return authRepository.userSnapshot(uid);
+    return authRepository.userSnapshotById(uid);
   }
 }
