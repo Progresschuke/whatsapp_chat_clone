@@ -9,7 +9,7 @@ class MessageCard extends StatelessWidget {
     required this.message,
   });
 
-  final Message message;
+  final MyMessage message;
 
   @override
   Widget build(BuildContext context) {

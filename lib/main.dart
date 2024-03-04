@@ -43,7 +43,7 @@ class MyApp extends ConsumerWidget {
           return const ContactScreen();
         },
         error: (error, stackTrace) {
-          return ErrorScreen(error: error.toString());
+          return Scaffold(body: ErrorScreen(error: error.toString()));
         },
         loading: () {
           return const Loader();

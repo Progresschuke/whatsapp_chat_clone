@@ -69,64 +69,64 @@ List<User> dummyusers = [
       image: AppImages.mike),
 ];
 
-List<Message> chatMsgs = [
-  Message(
+List<MyMessage> chatMsgs = [
+  MyMessage(
     msg: 'Hello Progress',
     sent: '12:00am',
     read: '',
     fromId: '2',
     toId: '1',
   ),
-  Message(
+  MyMessage(
     msg: 'Hi Michael',
     sent: '12:15am',
     read: '',
     fromId: '1',
     toId: '2',
   ),
-  Message(
+  MyMessage(
     msg: 'Hello Progress',
     sent: '12:00am',
     read: '',
     fromId: '2',
     toId: '1',
   ),
-  Message(
+  MyMessage(
     msg: 'Hi Michael',
     sent: '12:15am',
     read: '',
     fromId: '1',
     toId: '2',
   ),
-  Message(
+  MyMessage(
     msg: 'Hello Progress',
     sent: '12:00am',
     read: '',
     fromId: '2',
     toId: '1',
   ),
-  Message(
+  MyMessage(
     msg: 'Hi Michael',
     sent: '12:15am',
     read: '',
     fromId: '1',
     toId: '2',
   ),
-  Message(
+  MyMessage(
     msg: 'Hello Progress',
     sent: '12:00am',
     read: '',
     fromId: '2',
     toId: '1',
   ),
-  Message(
+  MyMessage(
     msg: 'Hi Michael',
     sent: '12:15am',
     read: '',
     fromId: '1',
     toId: '2',
   ),
-  Message(
+  MyMessage(
     msg:
         'I am glad to meet you today. I actually got your number from the registrar at your office',
     sent: '12:20am',
@@ -134,7 +134,7 @@ List<Message> chatMsgs = [
     fromId: '2',
     toId: '1',
   ),
-  Message(
+  MyMessage(
     msg:
         'I was just about to ask you that. It is all fine. How are you doing today?',
     sent: '12:40am',
