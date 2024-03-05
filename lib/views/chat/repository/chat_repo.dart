@@ -115,7 +115,7 @@ class ChatRepository {
     required String receiverUserId,
   }) async {
     try {
-      var messageId = Uuid().v1();
+      var messageId = const Uuid().v1();
       var timeSent = DateTime.now();
       UserModel receiverUser;
       var receiverUserData =

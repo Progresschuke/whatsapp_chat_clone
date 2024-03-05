@@ -138,11 +138,12 @@ import 'package:whatsapp_clone/common/widgets/loader.dart';
 import 'package:whatsapp_clone/constants/app_colors.dart';
 import 'package:whatsapp_clone/providers/chat/chat_provider.dart';
 import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
+import 'package:whatsapp_clone/views/chat/controller/chat_controller.dart';
 
 import '../../../utils/size/size_const.dart';
 import '../widgets/user_chat.dart';
 
-class ChatScreen extends ConsumerWidget {
+class ChatScreen extends ConsumerStatefulWidget {
   static const routeName = '/chat';
   const ChatScreen({
     Key? key,
@@ -155,38 +156,45 @@ class ChatScreen extends ConsumerWidget {
   final String uid;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends ConsumerState<ChatScreen> {
+  final TextEditingController messageController = TextEditingController();
+  void sendTextMessage() async {
+    final showSendButton = ref.watch(sendTextProvider);
+    if (showSendButton) {
+      ref.read(chatControllerProvider).sendTextMessage(
+            context: context,
+            text: messageController.text.trim(),
+            receiverUserId: widget.uid,
+          );
+    }
+  }
+
+  @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
-        appBar: chatAppBar(context, ref),
+        appBar: chatAppBar(),
         body: Column(
           children: [
             const Expanded(child: UserChat()),
-            userInputForm(context, ref),
+            userInputForm(),
           ],
         ));
   }
 
-  PreferredSizeWidget hatAppBar(BuildContext context) {
-    return AppBar(
-      title: Row(children: [
-        // UserProfilePics(user: user),
-        SizeConst.addHorizontalSpace(context, 0.02),
-        Text(
-          name,
-        ),
-        const Spacer(),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.videocam)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.call)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
-      ]),
-    );
-  }
-
-  PreferredSizeWidget chatAppBar(BuildContext context, WidgetRef ref) {
+  PreferredSizeWidget chatAppBar() {
     return AppBar(
       title: StreamBuilder(
-        stream: ref.read(authControllerProvider).getUserSnapshot(uid),
+        stream: ref.read(authControllerProvider).getUserSnapshot(widget.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loader();
@@ -198,7 +206,7 @@ class ChatScreen extends ConsumerWidget {
                 // UserProfilePics(user: user),
                 // SizeConst.addHorizontalSpace(context, 0.02),
                 Text(
-                  name,
+                  widget.name,
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -223,8 +231,9 @@ class ChatScreen extends ConsumerWidget {
     );
   }
 
-  Widget userInputForm(BuildContext context, WidgetRef ref) {
+  Widget userInputForm() {
     final showSendButton = ref.watch(sendTextProvider);
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 12,
@@ -244,6 +253,7 @@ class ChatScreen extends ConsumerWidget {
               children: [
                 Expanded(
                     child: TextFormField(
+                  controller: messageController,
                   decoration: InputDecoration(
                     prefixIcon: ChatIconButton(
                       onPressed: () {},
@@ -283,12 +293,13 @@ class ChatScreen extends ConsumerWidget {
               shape: BoxShape.circle,
               color: AppColorsLight.appBarColor,
             ),
-            child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  showSendButton ? Icons.send : Icons.mic,
-                  color: Colors.white,
-                )),
+            child: GestureDetector(
+              onTap: sendTextMessage,
+              child: Icon(
+                showSendButton ? Icons.send : Icons.mic,
+                color: Colors.white,
+              ),
+            ),
           )
         ],
       ),

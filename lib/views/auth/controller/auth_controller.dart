@@ -71,6 +71,7 @@ class AuthController {
 
   Future<UserModel?> getUserData() async {
     UserModel? user = await authRepository.getCurrentUserData();
+    print(user);
 
     return user;
   }

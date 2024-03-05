@@ -117,7 +117,7 @@ class AuthRepository {
 //determines if a user has been signed in or not to display either the chatscreen or landing page
   Future<UserModel?> getCurrentUserData() async {
     var userData =
-        await firestore.collection('user').doc(auth.currentUser?.uid).get();
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
     UserModel? user;
 
     if (userData.data() != null) {
