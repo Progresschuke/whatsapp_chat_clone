@@ -169,6 +169,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             text: messageController.text.trim(),
             receiverUserId: widget.uid,
           );
+      messageController.clear();
     }
   }
 

@@ -66,6 +66,7 @@ class ChatRepository {
         .set(senderChatContact.toMap());
   }
 
+//for the display of chatMessages on the chat screen
   void _saveMessageToMessageSubCollection({
     required String receiverId,
     required String message,
@@ -145,5 +146,21 @@ class ChatRepository {
         showSnackBar(context: context, error: e.toString());
       }
     }
+  }
+
+  Stream<List<ChatContact>> getChatContactList() {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .snapshots()
+        .asyncMap((event) async {
+      List<ChatContact> contactList = [];
+      for (var document in event.docs) {
+        var chatContact = ChatContact.fromMap(document.data());
+        contactList.add(chatContact);
+      }
+      return contactList;
+    });
   }
 }
