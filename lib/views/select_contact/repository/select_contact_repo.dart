@@ -46,8 +46,6 @@ class SelectContactRepository {
         // print(userData.phoneNumber);
 
         if (selectedPhoneNumber == userData.phoneNumber) {
-          print('===================');
-
           isFound = true;
           if (context.mounted) {
             Navigator.pushNamed(context, ChatScreen.routeName, arguments: {
@@ -66,10 +64,11 @@ class SelectContactRepository {
         }
       }
     } catch (e) {
-      // if (context.mounted) {
-      debugPrint(e.toString());
-      showSnackBar(context: context, error: 'error occured');
-      // }
+      if (context.mounted) {
+        debugPrint(e.toString());
+
+        showSnackBar(context: context, error: 'error occured');
+      }
     }
   }
 }

@@ -201,6 +201,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             return const Loader();
           }
 
+          if (!snapshot.hasData) {
+            return const SizedBox();
+          }
+
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/model/chat_contact.dart';
 import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
 
 import 'package:whatsapp_clone/views/chat/repository/chat_repo.dart';
@@ -29,5 +30,9 @@ class ChatController {
           senderUser: value!,
           receiverUserId: receiverUserId);
     });
+  }
+
+  Stream<List<ChatContact>> getChatContactList() {
+    return chatRepository.getChatContactList();
   }
 }

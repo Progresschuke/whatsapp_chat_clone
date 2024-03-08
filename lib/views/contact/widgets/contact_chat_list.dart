@@ -23,23 +23,37 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/data/dummy_users.dart';
-import 'package:whatsapp_clone/model/user.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../common/widgets/loader.dart';
+import '../../../model/chat_contact.dart';
+import '../../chat/controller/chat_controller.dart';
 import 'contact_card.dart';
 
-class ContactChatList extends StatelessWidget {
+class ContactChatList extends ConsumerWidget {
   const ContactChatList({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: dummyusers.length,
-        itemBuilder: (context, index) {
-          User user = dummyusers[index];
-          return ContactCard(
-            user: user,
-          );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return StreamBuilder<List<ChatContact>>(
+        stream: ref.read(chatControllerProvider).getChatContactList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Loader();
+          }
+          if (!snapshot.hasData) {
+            return const Center(
+              child: Text('No chat yet'),
+            );
+          }
+          return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                ChatContact chatContactData = snapshot.data![index];
+                return ContactCard(
+                  contact: chatContactData,
+                );
+              });
         });
   }
 }

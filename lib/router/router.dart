@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../model/user.dart';
 import '../views/auth/screens/login.dart';
 import '../views/auth/screens/otp.dart';
 import '../views/auth/screens/user_info.dart';

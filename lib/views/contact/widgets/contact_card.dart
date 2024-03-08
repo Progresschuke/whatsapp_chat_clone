@@ -141,32 +141,28 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/model/chat_contact.dart';
 
-import '../../../model/user.dart';
 import '../../chat/screen/chat.dart';
-import 'user_profile.dart';
 
 class ContactCard extends StatelessWidget {
-  const ContactCard({super.key, required this.user});
+  const ContactCard({super.key, required this.contact});
 
-  final User user;
+  final ChatContact contact;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (ctx) => const ChatScreen(
-                      name: 'Rwanda',
-                      uid: '007',
-                    )));
+        Navigator.pushNamed(context, ChatScreen.routeName, arguments: {
+          'name': contact.name,
+          'uid': contact.contactId,
+        });
       },
-      leading: UserProfilePics(user: user),
-      title: Text(user.userName),
-      subtitle: Text(user.message),
-      trailing: Text(user.sent),
+      // leading: UserProfilePics(user: user),
+      title: Text(contact.name),
+      subtitle: Text(contact.lastMessage),
+      trailing: Text(contact.timeSent.toString()),
     );
   }
 }
