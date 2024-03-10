@@ -1,16 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/widgets/loader.dart';
 
-import 'package:whatsapp_clone/constants/app_colors.dart';
-import 'package:whatsapp_clone/model/user.dart';
-import 'package:whatsapp_clone/providers/chat/chat_provider.dart';
-import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
-import 'package:whatsapp_clone/views/chat/controller/chat_controller.dart';
-
+import '../../../constants/app_colors.dart';
+import '../../../enum/message.dart';
+import '../../../model/user.dart';
+import '../../../providers/chat/chat_provider.dart';
 import '../../../utils/size/size_const.dart';
+import '../../../utils/utils.dart';
+import '../../auth/controller/auth_controller.dart';
 import '../../contact/widgets/user_profile.dart';
+import '../controller/chat_controller.dart';
 import '../widgets/user_chat.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
@@ -65,6 +68,27 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
             receiverUserId: widget.uid,
           );
       messageController.clear();
+    }
+  }
+
+  void sendFileMessage({
+    required File file,
+    required MessageType messageType,
+  }) {
+    ref.read(chatControllerProvider).sendFileMessages(
+        context: context,
+        file: file,
+        receiverId: widget.uid,
+        messageType: messageType);
+  }
+
+  void sendImageFile() async {
+    final image = await pickImageFromGallery(context);
+    if (image != null) {
+      sendFileMessage(
+        file: image,
+        messageType: MessageType.image,
+      );
     }
   }
 
@@ -189,7 +213,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                 ),
                 SizeConst.addHorizontalSpace(context, .001),
                 ChatIconButton(
-                  onPressed: () {},
+                  onPressed: sendImageFile,
                   icon: Icons.camera_alt_rounded,
                 ),
               ],

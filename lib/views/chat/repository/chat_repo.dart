@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
+import 'package:whatsapp_clone/common/repositories/firebase_storage_repo.dart';
 import 'package:whatsapp_clone/enum/message.dart';
 import 'package:whatsapp_clone/model/chat_contact.dart';
 import 'package:whatsapp_clone/model/message.dart';
@@ -199,5 +202,72 @@ class ChatRepository {
       }
       return chatMessages;
     });
+  }
+
+  void sendFileMessages({
+    required BuildContext context,
+    required File file,
+    required String receiverId,
+    required UserModel senderUserData,
+    required ProviderRef ref,
+    required MessageType messageType,
+  }) async {
+    try {
+      var messageId = const Uuid().v1();
+      var timeSent = DateTime.now();
+      String imageUrl =
+          await ref.read(commonFirebaseStorageRepository).storeFileToFirebase(
+                'chat/${messageType.type}/${senderUserData.uid}/$receiverId/$messageId',
+                file,
+              );
+
+      String contactMessage;
+
+//we do not need to add the messageType.text, it has aleady been handled in the sendTextMessage
+      switch (messageType) {
+        case MessageType.image:
+          contactMessage = '📷 Photo';
+          break;
+        case MessageType.video:
+          contactMessage = '🎥 Video';
+          break;
+        case MessageType.audio:
+          contactMessage = '🔉Audio';
+        case MessageType.gif:
+          contactMessage = 'Gif';
+
+        default:
+          contactMessage = '📷 Photo';
+      }
+      //save to chat contact subcollection
+
+      var receiverUserDataMap =
+          await firestore.collection('users').doc(receiverId).get();
+      UserModel receiverUserData =
+          UserModel.fromMap(receiverUserDataMap.data()!);
+
+      _saveDataToContactSubCollection(
+        senderUserData: senderUserData,
+        receiverUserData: receiverUserData,
+        timeSent: timeSent,
+        message: contactMessage,
+        receiverId: receiverId,
+      );
+
+      //save to message subcollection
+      _saveMessageToMessageSubCollection(
+        receiverId: receiverId,
+        message: imageUrl,
+        timeSent: timeSent,
+        messageId: messageId,
+        messageType: messageType,
+        senderUsername: senderUserData.name,
+        receiverUsername: receiverUserData.name,
+      );
+    } catch (e) {
+      if (context.mounted) {
+        showSnackBar(context: context, error: e.toString());
+      }
+    }
   }
 }
