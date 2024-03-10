@@ -78,4 +78,10 @@ class AuthController {
   Stream<UserModel> getUserSnapshot(String uid) {
     return authRepository.userSnapshotById(uid);
   }
+
+  //works with the widgetBinding Observer to get user's state
+
+  void setUserState(bool isOnline) {
+    authRepository.setUserState(isOnline);
+  }
 }

@@ -160,7 +160,7 @@ class ChatRepository {
         var chatContact = ChatContact.fromMap(document.data());
 
         //add to contact list directly or get chatUserData using the next method
-        contactList.add(chatContact);
+        // contactList.add(chatContact);
 
         //or======================Use this method to get details from the chat user details
         var chatUserData = await firestore
@@ -178,6 +178,26 @@ class ChatRepository {
       }
 
       return contactList;
+    });
+  }
+
+  Stream<List<Message>> getChatMessages(String contactId) {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .doc(contactId)
+        .collection('messages')
+        .orderBy('timeSent')
+        .snapshots()
+        .map((event) {
+      List<Message> chatMessages = [];
+      for (var chatMessage in event.docs) {
+        var message = Message.fromMap(chatMessage.data());
+
+        chatMessages.add(message);
+      }
+      return chatMessages;
     });
   }
 }

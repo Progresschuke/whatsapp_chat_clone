@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/user.dart';
-
 class UserProfilePics extends StatelessWidget {
-  const UserProfilePics({super.key, required this.user});
+  const UserProfilePics({
+    super.key,
+    required this.userProfilePic,
+    required this.userName,
+  });
 
-  final User user;
+  final String userProfilePic;
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
       backgroundColor: const Color(0xFFCED9DE),
-      backgroundImage: user.image == null ? null : AssetImage(user.image!),
-      child: user.image != null ? null : Text(getInitials(user.userName)),
+      backgroundImage: !userProfilePic.contains('http')
+          ? null
+          : NetworkImage(userProfilePic),
+      child:
+          userProfilePic.contains('http') ? null : Text(getInitials(userName)),
     );
   }
 

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/model/chat_contact.dart';
+import 'package:whatsapp_clone/model/message.dart';
 import 'package:whatsapp_clone/views/auth/controller/auth_controller.dart';
 
 import 'package:whatsapp_clone/views/chat/repository/chat_repo.dart';
@@ -34,5 +35,9 @@ class ChatController {
 
   Stream<List<ChatContact>> getChatContactList() {
     return chatRepository.getChatContactList();
+  }
+
+  Stream<List<Message>> chatMessages(String contactId) {
+    return chatRepository.getChatMessages(contactId);
   }
 }

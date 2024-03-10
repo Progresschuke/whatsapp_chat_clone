@@ -141,9 +141,11 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:whatsapp_clone/model/chat_contact.dart';
 
 import '../../chat/screen/chat.dart';
+import 'user_profile.dart';
 
 class ContactCard extends StatelessWidget {
   const ContactCard({super.key, required this.contact});
@@ -154,15 +156,31 @@ class ContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
+        print(contact.contactId);
         Navigator.pushNamed(context, ChatScreen.routeName, arguments: {
           'name': contact.name,
           'uid': contact.contactId,
         });
       },
-      // leading: UserProfilePics(user: user),
-      title: Text(contact.name),
-      subtitle: Text(contact.lastMessage),
-      trailing: Text(contact.timeSent.toString()),
+      leading: UserProfilePics(
+          userName: contact.name, userProfilePic: contact.profilePic),
+      title: Text(
+        contact.name,
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontSize: 18,
+            ),
+      ),
+      subtitle: Text(contact.lastMessage,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontSize: 16,
+              )),
+      trailing: Text(
+          DateFormat.Hm().format(
+            contact.timeSent,
+          ),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontSize: 14,
+              )),
     );
   }
 }

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:whatsapp_clone/utils/size/size_const.dart';
 
 import '../../../model/message.dart';
@@ -7,19 +9,21 @@ class MessageCard extends StatelessWidget {
   const MessageCard({
     super.key,
     required this.message,
+    required this.contactId,
   });
 
-  final MyMessage message;
+  final Message message;
+  final String contactId;
 
   @override
   Widget build(BuildContext context) {
-    return message.fromId == '1'
-        ? greenMessageCard(context)
-        : whiteMessageCard(context);
+    return message.senderId == FirebaseAuth.instance.currentUser!.uid
+        ? greenMessageCard(context, message)
+        : whiteMessageCard(context, message);
   }
 }
 
-Widget greenMessageCard(BuildContext _) {
+Widget greenMessageCard(BuildContext _, Message message) {
   return Align(
     alignment: Alignment.bottomRight,
     child: ConstrainedBox(
@@ -47,19 +51,23 @@ Widget greenMessageCard(BuildContext _) {
                   top: 8,
                 ),
                 child: Text(
-                  'nksejjgn efoiwajraekinm goaewniqmopngkeqondhbgmaondb sdgvnsazpogvmas zb s dgnvad o j',
+                  message.message,
                   style:
                       Theme.of(_).textTheme.titleLarge!.copyWith(fontSize: 18),
                 ),
               ),
-              const Positioned(right: 10, bottom: 0, child: Text('12.35pm'))
+              Positioned(
+                  right: 10,
+                  bottom: 0,
+                  child:
+                      Text(DateFormat.Hm().format(message.timeSent).toString()))
             ]),
           ),
         )),
   );
 }
 
-Widget whiteMessageCard(BuildContext _) {
+Widget whiteMessageCard(BuildContext _, Message message) {
   return Align(
     alignment: Alignment.bottomLeft,
     child: ConstrainedBox(
@@ -87,12 +95,16 @@ Widget whiteMessageCard(BuildContext _) {
                   top: 8,
                 ),
                 child: Text(
-                  'nksejjgn efoiwajraekinm goaewniqmopngkeqondhbgmaondb sdgvnsazpogvmas zb s dgnvad o j',
+                  message.message,
                   style:
                       Theme.of(_).textTheme.titleLarge!.copyWith(fontSize: 18),
                 ),
               ),
-              const Positioned(right: 10, bottom: 0, child: Text('12.35pm'))
+              Positioned(
+                  right: 10,
+                  bottom: 0,
+                  child:
+                      Text(DateFormat.Hm().format(message.timeSent).toString()))
             ]),
           ),
         )),
